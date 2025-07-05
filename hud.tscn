@@ -1,6 +1,17 @@
-[gd_scene format=3 uid="uid://ce8u7vrmlfinj"]
+[gd_scene load_steps=4 format=3 uid="uid://ce8u7vrmlfinj"]
+
+[ext_resource type="FontFile" uid="uid://bh61ehiw3h71h" path="res://assets/Kenney Bold.ttf" id="1_37p78"]
+[ext_resource type="Script" uid="uid://y8u3jgbbstft" path="res://hud.gd" id="1_64ctp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_64ctp"]
+font = ExtResource("1_37p78")
+font_size = 48
+shadow_size = 4
+shadow_color = Color(0.27451, 0.27451, 0.27451, 0.705882)
+shadow_offset = Vector2(2, 2)
 
 [node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_64ctp")
 
 [node name="Message" type="Label" parent="."]
 anchors_preset = 14
@@ -12,5 +23,46 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Coin Dash!"
+label_settings = SubResource("LabelSettings_64ctp")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Score" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_64ctp")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Time" type="Label" parent="MarginContainer"]
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_64ctp")
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_37p78")
+text = "Start"
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
